@@ -1,0 +1,108 @@
+@font-face {
+    font-family: "SF Pro Bold";
+  src:
+    url("font/SF-Pro-Display-Bold.otf") format("opentype");
+    font-style: normal; 
+    font-weight: 700;
+}
+
+*,*:after,*:before{margin: 0;padding: 0;box-sizing: border-box;font-family: "SF Pro Bold"; user-select: none;}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg__img {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 720px;
+    height: 720px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 0;
+    opacity: .1;
+    filter: blur(25px);
+    transition: 1s ease-in-out;
+}
+
+.player {
+    width: 710px;
+    height: 100px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: fixed;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 30px;
+    z-index: 10;
+    color: #fff;
+    transition: all .6s cubic-bezier(.47,1.64,.41,.8);
+}
+
+.track__info,
+.track__controlls {
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    z-index: 9;
+}
+
+.cover {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    margin-right: 10px;
+    transform: scale(.8);
+    transition: .4s cubic-bezier(.47,1.64,.41,.8);
+    box-shadow: 0 0 20px #000;
+}
+
+.track__info .details {
+    display: flex;
+    flex-direction: column;
+}
+
+.track__info .details .track__name {
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.track__info .details .artist__name {
+    font-size: 16px;
+    color: #666;
+}
+
+.track__controlls .time {
+    color: #666;
+    font-size: 12px;
+}
+
+.track__controlls .btn {
+    padding: 3px;
+    border-radius: 10px;
+    outline: none;
+    background: none;
+    border: none;
+}
+
+.track__controlls .btn.like {
+    margin: 0 30px;
+    stroke: #fff;
+    /* fill: #00A3FF; */
+    fill: none;
+}
