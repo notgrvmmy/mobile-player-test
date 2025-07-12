@@ -204,7 +204,6 @@ function handleTouchMove(event) {
             setTimeout(animBg, 1000);
             document.querySelector('.player').classList.add('right');
             setTimeout(swipeR, 300);
-            navigator.vibrate(20);
         }
         else {
             nextTrackSwipe();
@@ -213,7 +212,6 @@ function handleTouchMove(event) {
             setTimeout(animBg, 1000);
             document.querySelector('.player').classList.add('left');
             setTimeout(swipeL, 300);
-            navigator.vibrate(20);
         }
     } else {
         
