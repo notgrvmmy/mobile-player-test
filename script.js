@@ -155,7 +155,7 @@ function applySwipeStyle(x) {
 }
 
 function resetPlayerStyle() {
-    player.style.transition = 'transform .6s cubic-bezier(.47,1.64,.41,.8)';
+    player.style.transition = 'all .6s cubic-bezier(.47,1.64,.41,.8)';
     player.style.transform = 'translateX(0) scaleY(1)';
     //player.style.boxShadow = '0 0 0 rgba(0,0,0,0)';
     // player.style.backdropFilter = 'blur(0px)';
