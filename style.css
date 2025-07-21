@@ -46,9 +46,8 @@ body {
     padding-right: 30px;
     z-index: 10;
     color: #fff;
-    /* transition: all .6s cubic-bezier(.47,1.64,.41,.8); */
-    transition: transform .6s cubic-bezier(.47,1.64,.41,.8);
-  will-change: transform;
+    transition: all .6s cubic-bezier(.47,1.64,.41,.8);
+    will-change: transform;
 }
 
 .track__info,
