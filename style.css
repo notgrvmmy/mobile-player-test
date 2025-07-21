@@ -47,7 +47,7 @@ body {
     z-index: 10;
     color: #fff;
     /* transition: all .6s cubic-bezier(.47,1.64,.41,.8); */
-    transition: transform 0.3s ease;
+    transition: transform .6s cubic-bezier(.47,1.64,.41,.8);
   will-change: transform, box-shadow, backdrop-filter;
   backdrop-filter: blur(0px);
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
