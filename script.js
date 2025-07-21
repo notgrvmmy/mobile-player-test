@@ -161,7 +161,7 @@ function resetPlayerStyle() {
     // player.style.backdropFilter = 'blur(0px)';
     setTimeout(() => {
         player.style.transition = '';
-    }, 300);
+    }, 600);
 }
 
 function handleTouchStart(e) {
