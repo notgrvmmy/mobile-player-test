@@ -150,15 +150,15 @@ const swipeThreshold = 50;
 function applySwipeStyle(x) {
     player.style.transform = `translateX(${x}px) scaleY(${1 - Math.abs(x) / 400})`;
     //player.style.boxShadow = `0 5px 20px rgba(0,0,0,${Math.abs(x) / 150})`;
-    player.style.backdropFilter = `blur(${Math.abs(x) / 15}px)`;
+    // player.style.backdropFilter = `blur(${Math.abs(x) / 15}px)`;
     player.style.transition = 'none';
 }
 
 function resetPlayerStyle() {
-    player.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease';
+    player.style.transition = 'transform .6s cubic-bezier(.47,1.64,.41,.8)';
     player.style.transform = 'translateX(0) scaleY(1)';
     //player.style.boxShadow = '0 0 0 rgba(0,0,0,0)';
-    player.style.backdropFilter = 'blur(0px)';
+    // player.style.backdropFilter = 'blur(0px)';
     setTimeout(() => {
         player.style.transition = '';
     }, 300);
