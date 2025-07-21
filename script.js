@@ -167,7 +167,7 @@ function resetPlayerStyle() {
 function handleTouchStart(e) {
     x1 = e.touches[0].clientX;
     isSwiping = true;
-    player.style.transform = 'scale(.85)';
+    document.querySelector('.player').style.transform = 'scale(.98)';
 }
 
 function handleTouchMove(e) {
@@ -182,7 +182,6 @@ function handleTouchMove(e) {
 
 function handleTouchEnd() {
     if (!isSwiping) return;
-    player.style.transform = 'scale(1)';
     if (currentTranslateX > swipeThreshold) {
         prevTrackSwipe();
         navigator.vibrate?.(50);
@@ -190,6 +189,7 @@ function handleTouchEnd() {
         nextTrackSwipe();
         navigator.vibrate?.(50);
     }
+    document.querySelector('.player').style.transform = 'scale(1)';
 
     resetPlayerStyle();
     x1 = null;
