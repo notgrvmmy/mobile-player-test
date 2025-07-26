@@ -32,6 +32,50 @@ body {
     transition: 1s ease-in-out;
 }
 
+#rewindProgress {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  right: 16px;
+  height: 6px;
+  border-radius: 50px;
+  appearance: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 1000;
+  display: none;
+}
+
+#rewindProgress::-webkit-progress-bar {
+  background-color: transparent;
+  border-radius: 50px;
+}
+
+#rewindProgress::-webkit-progress-value {
+  background: linear-gradient(to right, #00ffc3, #0079ff);
+  border-radius: 50px;
+}
+
+#rewindProgress::-moz-progress-bar {
+  background: linear-gradient(to right, #00ffc3, #0079ff);
+  border-radius: 50px;
+}
+
+#rewindTime {
+  position: absolute;
+  top: 24px;
+  right: 16px;
+  font-size: 14px;
+  font-family: 'SF Pro Text', 'Segoe UI', sans-serif;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 8px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  z-index: 1001;
+  display: none;
+}
+
+
 .player {
     width: 710px;
     height: 100px;
