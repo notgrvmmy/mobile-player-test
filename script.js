@@ -1,16 +1,15 @@
-// DOM-елементи
+
+// DOM elements
 const player = document.querySelector('.player');
 let track_art = document.querySelector('.player .track__info .cover');
 let player_bg = document.querySelector('.player .bg__img');
 let track_name = document.querySelector('.player .track__info .details .track__name');
 let track_artist = document.querySelector('.player .track__info .details .artist__name');
 let curr_time = document.querySelector('.player .track__controlls .time .curr__time');
-let duration = document.querySelector('.player .track__controlls .time .duration');
 let curr_track = document.createElement('audio');
 
 let track_index = 0;
 let isPlaying = false;
-let isRandom = false;
 let updateTimer;
 
 const music_list = [
@@ -28,7 +27,7 @@ const music_list = [
     },
     {
         img: 'Music/goodpuss.jpg',
-        name: 'GOOD  PUSS',
+        name: 'GOOD PUSS',
         artist: 'Cobrah',
         music: 'Music/GOOD PUSS.mp3'
     },
@@ -52,7 +51,6 @@ const music_list = [
     }
 ];
 
-// Завантаження треку
 function loadTrack(index) {
     clearInterval(updateTimer);
     reset();
@@ -92,24 +90,14 @@ function pauseTrack() {
 }
 
 function nextTrack() {
-    if (track_index < music_list.length - 1 && !isRandom) {
-        track_index++;
-    } else if (isRandom) {
-        track_index = Math.floor(Math.random() * music_list.length);
-    } else {
-        track_index = 0;
-    }
+    track_index = (track_index + 1) % music_list.length;
     loadTrack(track_index);
     playTrack();
     animBg();
 }
 
 function prevTrack() {
-    if (track_index > 0) {
-        track_index--;
-    } else {
-        track_index = music_list.length - 1;
-    }
+    track_index = (track_index - 1 + music_list.length) % music_list.length;
     loadTrack(track_index);
     playTrack();
 }
@@ -138,44 +126,38 @@ function setUpdate() {
     }
 }
 
-// ==== Новый touch-свайп с растягиванием ====
-
+// ==== Swipe to switch track ====
 let x1 = null;
 let currentTranslateX = 0;
 let isSwiping = false;
-
+let isSeeking = false;
 const maxDrag = 80;
 const swipeThreshold = 50;
 
 function applySwipeStyle(x) {
     player.style.transform = `translateX(${x}px) scaleY(${1 - Math.abs(x) / 400})`;
-    //player.style.boxShadow = `0 5px 20px rgba(0,0,0,${Math.abs(x) / 150})`;
-    // player.style.backdropFilter = `blur(${Math.abs(x) / 15}px)`;
     player.style.transition = 'none';
 }
 
 function resetPlayerStyle() {
     player.style.transition = 'all .6s cubic-bezier(.47,1.64,.41,.8)';
     player.style.transform = 'translateX(0) scaleY(1)';
-    //player.style.boxShadow = '0 0 0 rgba(0,0,0,0)';
-    // player.style.backdropFilter = 'blur(0px)';
     setTimeout(() => {
         player.style.transition = '';
     }, 600);
 }
 
 function handleTouchStart(e) {
+    if (e.touches.length > 1) return;
     x1 = e.touches[0].clientX;
-    isSwiping = true;
-    document.querySelector('.player').style.transform = 'scale(.98)';
+    isSwiping = !isSeeking;
+    if (isSwiping) player.style.transform = 'scale(.98)';
 }
 
 function handleTouchMove(e) {
     if (!x1 || !isSwiping) return;
-
     let x2 = e.touches[0].clientX;
     let xDiff = x2 - x1;
-
     currentTranslateX = Math.max(-maxDrag, Math.min(xDiff, maxDrag));
     applySwipeStyle(currentTranslateX);
 }
@@ -189,18 +171,48 @@ function handleTouchEnd() {
         nextTrackSwipe();
         navigator.vibrate?.(50);
     }
-    document.querySelector('.player').style.transform = 'scale(1)';
-
+    player.style.transform = 'scale(1)';
     resetPlayerStyle();
     x1 = null;
     currentTranslateX = 0;
     isSwiping = false;
 }
 
-// Подключаем слушатели
+// ==== Long Press Seek Feature ====
+let seekTimer = null;
+let seekStartX = 0;
+
+player.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 1) return;
+    seekStartX = e.touches[0].clientX;
+    seekTimer = setTimeout(() => {
+        isSeeking = true;
+        player.classList.add('seeking');
+        curr_track.pause();
+    }, 600);
+});
+
+player.addEventListener('touchmove', (e) => {
+    if (isSeeking) {
+        const deltaX = e.touches[0].clientX - seekStartX;
+        const seekAmount = deltaX / 5;
+        curr_track.currentTime = Math.min(Math.max(curr_track.currentTime + seekAmount, 0), curr_track.duration);
+        seekStartX = e.touches[0].clientX;
+    }
+});
+
+player.addEventListener('touchend', () => {
+    clearTimeout(seekTimer);
+    if (isSeeking) {
+        player.classList.remove('seeking');
+        if (isPlaying) curr_track.play();
+        isSeeking = false;
+    }
+});
+
+// Start everything
 player.addEventListener('touchstart', handleTouchStart, false);
 player.addEventListener('touchmove', handleTouchMove, false);
 player.addEventListener('touchend', handleTouchEnd, false);
 
-// Запуск
 loadTrack(track_index);
